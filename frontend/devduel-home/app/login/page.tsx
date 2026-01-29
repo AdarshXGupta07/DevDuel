@@ -113,7 +113,6 @@ export default function LoginPage() {
           </p>
         </div>
       </section>
-
       {/* Footer */}
       <footer className="relative z-10 text-center text-white/50 pb-6">
         © 2026 DevDuel AI • Built for Hackathons
