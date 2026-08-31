@@ -15,3 +15,25 @@ class UserResponse(BaseModel):
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
     model_config = {"from_attributes": True}
+    
+class UserLogin(BaseModel):
+    email: str
+    password: str
+
+class UserTokens(BaseModel):
+    access_token: str
+    refresh_token: str
+
+class RefreshRequest(BaseModel):
+    refresh_token: str
+
+class AccessTokenResponse(BaseModel):
+    access_token: str
+
+class UserUpdate(BaseModel):
+    name: str
+    email: str
+
+class PasswordUpdate(BaseModel):
+    current_password: str
+    new_password: str
