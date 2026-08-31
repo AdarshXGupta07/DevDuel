@@ -32,3 +32,16 @@ def try_match():
         "player1": {"user_id": user1_id, "sid": sid1},
         "player2": {"user_id": user2_id, "sid": sid2},
     }
+
+def legal_transition(current_status, new_status):
+    transitions = {
+        "pending": ["ready", "abandoned"],
+        "ready": ["active", "abandoned"],
+        "active": ["finished", "abandoned"],
+        "finished": [],
+        "abandoned": [],
+    }
+    if new_status not in transitions.get(current_status, []):
+        raise ValueError(f"Illegal status transition from {current_status} to {new_status}")
+    else:
+        return new_status in transitions.get(current_status, [])

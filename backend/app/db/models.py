@@ -59,8 +59,13 @@ class TestCase(Base):
 class Duel(Base):
     __tablename__ = "duels"
     __table_args__ = (
-        CheckConstraint("player1_id != player2_id", name="ck_duel_players_distinct"),
-    )
+    CheckConstraint("player1_id != player2_id", name="ck_duel_players_distinct"),
+    CheckConstraint(
+        "status IN ('pending', 'ready', 'active', 'finished', 'abandoned')",
+        name="ck_duel_status_valid",
+    ),
+)
+    
 
     id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
     player1_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("users.id"))
@@ -68,6 +73,8 @@ class Duel(Base):
     problem_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("problems.id"))
     status: Mapped[str] = mapped_column(default="pending", server_default="pending")
     # 'pending' | 'ready' | 'active' | 'finished' | 'abandoned'
+    player1_ready: Mapped[bool] = mapped_column(default=False, server_default="false")
+    player2_ready: Mapped[bool] = mapped_column(default=False, server_default="false")
     winner_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
     started_at: Mapped[datetime | None]
     finished_at: Mapped[datetime | None]
