@@ -1,6 +1,12 @@
-fastapi 
-uvicorn[standard] 
+fastapi
+uvicorn[standard]
 pydantic-settings
 sqlalchemy[asyncio]
+asyncpg
 alembic
- 
+bcrypt
+python-jose[cryptography]
+python-socketio
+pytest
+pytest-asyncio
+httpx
