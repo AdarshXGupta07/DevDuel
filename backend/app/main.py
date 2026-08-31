@@ -3,6 +3,7 @@ from app.config import settings
 from fastapi import FastAPI
 from app.routes.auth import router as auth_router
 from app.sockets.server import sio
+from app.sockets import matchmaking  # noqa: F401 — import registers its @sio.on handlers
 
 fastapi_app = FastAPI()
 

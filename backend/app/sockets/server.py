@@ -2,6 +2,7 @@ import socketio
 from app.core.security import decode_token
 from jose import JWTError
 from socketio.exceptions import ConnectionRefusedError
+from app.services.matchmaking_service import remove_from_queue
 sio=socketio.AsyncServer(async_mode='asgi', cors_allowed_origins='*')
 
 
@@ -34,5 +35,7 @@ async def whoami(sid):
     
 @sio.event
 async def disconnect(sid):
-    # Clean up any resources or state associated with this connection
+    session = await sio.get_session(sid)
+    if session:
+        remove_from_queue(session["user_id"])
     print(f"Client {sid} disconnected.")
