@@ -1,0 +1,77 @@
+slug: reverse-chain
+title: Reverse The Chain
+difficulty: medium
+tags: [linked-list, pointers]
+source: original
+license: proprietary
+question: |
+  A singly linked chain of nodes is stored as an array: node `i` holds a value, and
+  `next[i]` is the index of the node that follows it, or -1 for the end.
+
+  Walk the chain from the given head, reverse it, and print the values in the new order.
+
+  **Input**
+  The first line contains two integers `n` and `head`.
+  The second line contains `n` space-separated values.
+  The third line contains `n` space-separated next-indices, each either a valid index or -1.
+
+  **Output**
+  A single line with the values in reversed chain order, space-separated. If the chain is
+  empty (head is -1), print nothing.
+constraints: |
+  1 <= n <= 200000
+  -1 <= head < n
+  -1000000000 <= each value <= 1000000000
+  The chain contains no cycle, and not every node is necessarily part of it.
+starter_code:
+  python: |
+    import sys
+
+    def main():
+        data = sys.stdin.read().split()
+        n, head = int(data[0]), int(data[1])
+        values = [int(x) for x in data[2:2 + n]]
+        nxt = [int(x) for x in data[2 + n:2 + 2 * n]]
+        # TODO: walk from head, reverse, print
+        pass
+
+    main()
+test_cases:
+  - public: true
+    input: |
+      4 0
+      10 20 30 40
+      1 2 3 -1
+    output: |
+      40 30 20 10
+  - public: true
+    input: |
+      3 2
+      7 8 9
+      -1 0 1
+    output: |
+      7 8 9
+  - input: |
+      1 0
+      5
+      -1
+    output: |
+      5
+  - input: |
+      3 -1
+      1 2 3
+      -1 -1 -1
+    output: |
+
+  - input: |
+      5 4
+      1 2 3 4 5
+      -1 0 1 2 3
+    output: |
+      1 2 3 4 5
+  - input: |
+      5 0
+      1 2 3 4 5
+      2 -1 4 -1 -1
+    output: |
+      5 3 1

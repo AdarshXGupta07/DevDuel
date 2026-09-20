@@ -1,0 +1,66 @@
+slug: running-total
+title: Running Total
+difficulty: easy
+tags: [arrays, prefix-sums]
+source: original
+license: proprietary
+question: |
+  A warehouse logs how many items arrived each hour. Given the hourly counts, report the
+  running total after each hour.
+
+  **Input**
+  The first line contains an integer `n` — the number of hours.
+  The second line contains `n` space-separated integers, the count for each hour.
+
+  **Output**
+  A single line of `n` space-separated integers, where the i-th value is the sum of the
+  first i counts.
+constraints: |
+  1 <= n <= 100000
+  -1000 <= each count <= 1000
+starter_code:
+  python: |
+    import sys
+
+    def main():
+        data = sys.stdin.read().split()
+        n = int(data[0])
+        counts = [int(x) for x in data[1:1 + n]]
+        # TODO: build the running totals
+        print()
+
+    main()
+  javascript: |
+    const data = require('fs').readFileSync(0, 'utf8').split(/\s+/).filter(Boolean);
+    const n = Number(data[0]);
+    const counts = data.slice(1, 1 + n).map(Number);
+    // TODO: build the running totals
+    console.log('');
+test_cases:
+  - public: true
+    input: |
+      5
+      1 2 3 4 5
+    output: |
+      1 3 6 10 15
+  - public: true
+    input: |
+      3
+      -1 5 -2
+    output: |
+      -1 4 2
+  - input: |
+      1
+      0
+    output: |
+      0
+  - input: |
+      6
+      1000 1000 1000 1000 1000 1000
+    output: |
+      1000 2000 3000 4000 5000 6000
+  - input: |
+      4
+      -1000 -1000 1000 1000
+    output: |
+      -1000 -2000 -1000 0

@@ -1,0 +1,86 @@
+slug: log-compaction
+title: Log Compaction
+difficulty: easy
+tags: [strings, hashing, sorting]
+source: original
+license: proprietary
+question: |
+  A log file contains one event name per line. Compact it: report each distinct event and
+  how many times it occurred, ordered by count descending. Ties are broken by event name
+  in ascending lexicographic order.
+
+  **Input**
+  The first line contains an integer `n` — the number of log lines.
+  Each of the next `n` lines contains one event name (lowercase letters only).
+
+  **Output**
+  One line per distinct event, formatted as `name count`.
+constraints: |
+  1 <= n <= 200000
+  Each event name is between 1 and 20 characters.
+starter_code:
+  python: |
+    import sys
+
+    def main():
+        lines = sys.stdin.read().split()
+        n = int(lines[0])
+        events = lines[1:1 + n]
+        # TODO: count and order the events
+        pass
+
+    main()
+  javascript: |
+    const lines = require('fs').readFileSync(0, 'utf8').split(/\s+/).filter(Boolean);
+    const n = Number(lines[0]);
+    const events = lines.slice(1, 1 + n);
+    // TODO: count and order the events
+test_cases:
+  - public: true
+    input: |
+      5
+      deploy
+      build
+      deploy
+      test
+      deploy
+    output: |
+      deploy 3
+      build 1
+      test 1
+  - public: true
+    input: |
+      4
+      beta
+      alpha
+      beta
+      alpha
+    output: |
+      alpha 2
+      beta 2
+  - input: |
+      1
+      solo
+    output: |
+      solo 1
+  - input: |
+      6
+      a
+      b
+      c
+      a
+      b
+      a
+    output: |
+      a 3
+      b 2
+      c 1
+  - input: |
+      3
+      zz
+      yy
+      xx
+    output: |
+      xx 1
+      yy 1
+      zz 1

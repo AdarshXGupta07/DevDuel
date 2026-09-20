@@ -1,0 +1,55 @@
+slug: longest-unique-run
+title: Longest Unique Session
+difficulty: medium
+tags: [sliding-window, strings, hashing]
+source: original
+license: proprietary
+question: |
+  A session log records one page code per visit, as a string of lowercase letters. Find
+  the length of the longest unbroken stretch in which no page is visited twice.
+
+  **Input**
+  A single line containing the log. It may be empty.
+
+  **Output**
+  A single integer: the length of the longest stretch with no repeated character.
+constraints: |
+  0 <= length of the log <= 200000
+  The log contains only lowercase letters.
+starter_code:
+  python: |
+    import sys
+
+    def main():
+        log = sys.stdin.readline().strip()
+        # TODO: longest stretch with no repeats
+        print(0)
+
+    main()
+test_cases:
+  - public: true
+    input: |
+      abcabcbb
+    output: |
+      3
+  - public: true
+    input: |
+      bbbbb
+    output: |
+      1
+  - input: |
+
+    output: |
+      0
+  - input: |
+      pwwkew
+    output: |
+      3
+  - input: |
+      abcdefghijklmnopqrstuvwxyz
+    output: |
+      26
+  - input: |
+      abba
+    output: |
+      2

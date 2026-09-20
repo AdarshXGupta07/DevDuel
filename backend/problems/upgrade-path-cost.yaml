@@ -1,0 +1,68 @@
+slug: upgrade-path-cost
+title: Upgrade Path Cost
+difficulty: medium
+tags: [dynamic-programming, arrays]
+source: original
+license: proprietary
+question: |
+  A service must be upgraded through a series of versions. Applying version `i` costs
+  `cost[i]`. From a version you may jump to the next one, or skip exactly one — you can
+  never skip two in a row.
+
+  You may start at version 0 or version 1, and you are finished once you have moved past
+  the last version. Find the cheapest total.
+
+  **Input**
+  The first line contains an integer `n`, the number of versions.
+  The second line contains `n` space-separated integers, the costs.
+
+  **Output**
+  A single integer: the minimum total cost.
+constraints: |
+  1 <= n <= 200000
+  0 <= each cost <= 1000000
+starter_code:
+  python: |
+    import sys
+
+    def main():
+        data = sys.stdin.read().split()
+        n = int(data[0])
+        cost = [int(x) for x in data[1:1 + n]]
+        # TODO: cheapest way past the last version
+        print(0)
+
+    main()
+test_cases:
+  - public: true
+    input: |
+      3
+      10 15 20
+    output: |
+      15
+  - public: true
+    input: |
+      10
+      1 100 1 1 1 100 1 1 100 1
+    output: |
+      6
+  - input: |
+      1
+      5
+    output: |
+      0
+  - input: |
+      2
+      5 7
+    output: |
+      5
+  - input: |
+      4
+      0 0 0 0
+    output: |
+      0
+  - input: |
+      5
+      1 2 3 4 5
+    output: |
+      6

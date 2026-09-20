@@ -1,0 +1,69 @@
+slug: cycle-in-chain
+title: Loop In The Pipeline
+difficulty: medium
+tags: [linked-list, two-pointers, cycle-detection]
+source: original
+license: proprietary
+question: |
+  A processing pipeline is stored as an array: stage `i` hands off to stage `next[i]`,
+  or to -1 if it is the final stage.
+
+  A misconfiguration can make the pipeline loop forever. Starting from the given stage,
+  report whether following the hand-offs ever revisits a stage.
+
+  **Input**
+  The first line contains two integers `n` and `start`.
+  The second line contains `n` space-separated next-indices, each a valid index or -1.
+
+  **Output**
+  Print `LOOP` if the walk revisits a stage, otherwise `TERMINATES`.
+constraints: |
+  1 <= n <= 500000
+  0 <= start < n
+
+  O(1) extra space is possible — think about two walkers moving at different speeds.
+starter_code:
+  python: |
+    import sys
+
+    def main():
+        data = sys.stdin.read().split()
+        n, start = int(data[0]), int(data[1])
+        nxt = [int(x) for x in data[2:2 + n]]
+        # TODO: does the walk from `start` revisit a stage?
+        print("TERMINATES")
+
+    main()
+test_cases:
+  - public: true
+    input: |
+      4 0
+      1 2 3 1
+    output: |
+      LOOP
+  - public: true
+    input: |
+      4 0
+      1 2 3 -1
+    output: |
+      TERMINATES
+  - input: |
+      1 0
+      0
+    output: |
+      LOOP
+  - input: |
+      1 0
+      -1
+    output: |
+      TERMINATES
+  - input: |
+      5 4
+      1 2 3 4 0
+    output: |
+      LOOP
+  - input: |
+      6 0
+      1 2 -1 4 5 3
+    output: |
+      TERMINATES

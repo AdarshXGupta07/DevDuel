@@ -1,0 +1,76 @@
+slug: anagram-clusters
+title: Anagram Clusters
+difficulty: easy
+tags: [strings, hashing, sorting]
+source: original
+license: proprietary
+question: |
+  A deduplication job treats two product codes as the same family when one is a
+  rearrangement of the other — same letters, same counts, any order.
+
+  Given the codes, report how many distinct families there are.
+
+  **Input**
+  The first line contains an integer `n`.
+  Each of the next `n` lines contains one code, made only of lowercase letters.
+
+  **Output**
+  A single integer: the number of families.
+constraints: |
+  1 <= n <= 100000
+  1 <= length of each code <= 50
+  Codes may repeat; identical codes are obviously in the same family.
+starter_code:
+  python: |
+    import sys
+
+    def main():
+        data = sys.stdin.read().split()
+        n = int(data[0])
+        codes = data[1:1 + n]
+        # TODO: count the distinct anagram families
+        print(0)
+
+    main()
+test_cases:
+  - public: true
+    input: |
+      6
+      eat
+      tea
+      tan
+      ate
+      nat
+      bat
+    output: |
+      3
+  - public: true
+    input: |
+      3
+      abc
+      abc
+      abc
+    output: |
+      1
+  - input: |
+      1
+      z
+    output: |
+      1
+  - input: |
+      4
+      ab
+      ba
+      cd
+      dc
+    output: |
+      2
+  - input: |
+      5
+      a
+      aa
+      aaa
+      aa
+      a
+    output: |
+      3

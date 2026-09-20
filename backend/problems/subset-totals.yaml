@@ -1,0 +1,66 @@
+slug: subset-totals
+title: Every Possible Invoice
+difficulty: medium
+tags: [recursion, backtracking, subsets]
+source: original
+license: proprietary
+question: |
+  A billing system can combine any selection of line items — including none of them —
+  into one invoice. Given the line-item amounts, list every possible invoice total.
+
+  There are 2^n possible selections; print all 2^n totals in non-decreasing order.
+  Totals repeat when different selections happen to add up to the same amount, and each
+  selection contributes its own entry.
+
+  **Input**
+  The first line contains an integer `n`.
+  The second line contains `n` space-separated amounts.
+
+  **Output**
+  A single line of 2^n space-separated totals, in non-decreasing order.
+constraints: |
+  1 <= n <= 18
+  0 <= each amount <= 100000
+
+  2^18 is about 262,000 totals — generating them is fine, but generating them carelessly
+  (rebuilding a list per branch) is not.
+starter_code:
+  python: |
+    import sys
+
+    def main():
+        data = sys.stdin.read().split()
+        n = int(data[0])
+        amounts = [int(x) for x in data[1:1 + n]]
+        # TODO: every subset total, sorted
+        print()
+
+    main()
+test_cases:
+  - public: true
+    input: |
+      3
+      1 2 3
+    output: |
+      0 1 2 3 3 4 5 6
+  - public: true
+    input: |
+      2
+      5 5
+    output: |
+      0 5 5 10
+  - input: |
+      1
+      0
+    output: |
+      0 0
+  - input: |
+      1
+      7
+    output: |
+      0 7
+  - input: |
+      4
+      1 1 1 1
+    output: |
+      0 1 1 1 1 2 2 2 2 2 2 3 3 3 3 4

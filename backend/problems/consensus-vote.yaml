@@ -1,0 +1,69 @@
+slug: consensus-vote
+title: Consensus Vote
+difficulty: easy
+tags: [arrays, hashing, voting]
+source: original
+license: proprietary
+question: |
+  A distributed system asks every node to report a value. A decision is only valid when
+  strictly more than half the nodes report the same value.
+
+  Given the reported values, print the consensus value, or `NONE` if no value has a
+  strict majority.
+
+  **Input**
+  The first line contains an integer `n`, the number of nodes.
+  The second line contains `n` space-separated integers, the reported values.
+
+  **Output**
+  The consensus value, or `NONE`.
+constraints: |
+  1 <= n <= 200000
+  -1000000000 <= each value <= 1000000000
+
+  "More than half" means strictly greater than n/2 — exactly half is not a consensus.
+starter_code:
+  python: |
+    import sys
+
+    def main():
+        data = sys.stdin.read().split()
+        n = int(data[0])
+        values = [int(x) for x in data[1:1 + n]]
+        # TODO: find the strict majority, if there is one
+        print("NONE")
+
+    main()
+test_cases:
+  - public: true
+    input: |
+      5
+      3 3 4 3 2
+    output: |
+      3
+  - public: true
+    input: |
+      4
+      1 1 2 2
+    output: |
+      NONE
+  - input: |
+      1
+      42
+    output: |
+      42
+  - input: |
+      7
+      -5 -5 -5 -5 1 2 3
+    output: |
+      -5
+  - input: |
+      6
+      9 9 9 1 2 3
+    output: |
+      NONE
+  - input: |
+      3
+      1000000000 1000000000 -1000000000
+    output: |
+      1000000000

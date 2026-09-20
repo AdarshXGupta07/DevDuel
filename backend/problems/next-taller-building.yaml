@@ -1,0 +1,63 @@
+slug: next-taller-building
+title: Next Taller Building
+difficulty: medium
+tags: [stack, arrays, monotonic-stack]
+source: original
+license: proprietary
+question: |
+  A surveyor walks east along a street recording building heights. For each building,
+  report the height of the first building strictly taller than it that lies to its east.
+
+  If no building to the east is taller, report -1.
+
+  **Input**
+  The first line contains an integer `n`.
+  The second line contains `n` space-separated integers, the heights from west to east.
+
+  **Output**
+  A single line of `n` space-separated integers.
+constraints: |
+  1 <= n <= 200000
+  1 <= each height <= 1000000000
+
+  Comparing every pair is O(n^2) and will not finish on the largest inputs.
+starter_code:
+  python: |
+    import sys
+
+    def main():
+        data = sys.stdin.read().split()
+        n = int(data[0])
+        heights = [int(x) for x in data[1:1 + n]]
+        # TODO: for each building, the first strictly taller one to its east
+        print(" ".join(["-1"] * n))
+
+    main()
+test_cases:
+  - public: true
+    input: |
+      5
+      4 5 2 25 3
+    output: |
+      5 25 25 -1 -1
+  - public: true
+    input: |
+      4
+      9 8 7 6
+    output: |
+      -1 -1 -1 -1
+  - input: |
+      1
+      1
+    output: |
+      -1
+  - input: |
+      5
+      1 2 3 4 5
+    output: |
+      2 3 4 5 -1
+  - input: |
+      6
+      3 3 3 5 3 3
+    output: |
+      5 5 5 -1 -1 -1

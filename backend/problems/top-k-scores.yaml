@@ -1,0 +1,64 @@
+slug: top-k-scores
+title: Leaderboard Cut
+difficulty: medium
+tags: [heaps, sorting, selection]
+source: original
+license: proprietary
+question: |
+  A tournament publishes only the top `k` scores. Given every score, print the `k`
+  highest in decreasing order.
+
+  Scores may repeat, and a repeated score occupies as many places as it appears.
+
+  **Input**
+  The first line contains two integers `n` and `k`.
+  The second line contains `n` space-separated scores.
+
+  **Output**
+  A single line of `k` space-separated scores, highest first.
+constraints: |
+  1 <= k <= n <= 500000
+  -1000000000 <= each score <= 1000000000
+
+  Sorting everything is O(n log n) and passes; a heap of size k is O(n log k) and is the
+  intended approach when k is much smaller than n.
+starter_code:
+  python: |
+    import sys
+
+    def main():
+        data = sys.stdin.read().split()
+        n, k = int(data[0]), int(data[1])
+        scores = [int(x) for x in data[2:2 + n]]
+        # TODO: the k highest, decreasing
+        print()
+
+    main()
+test_cases:
+  - public: true
+    input: |
+      6 3
+      5 1 9 3 9 2
+    output: |
+      9 9 5
+  - public: true
+    input: |
+      4 4
+      1 2 3 4
+    output: |
+      4 3 2 1
+  - input: |
+      1 1
+      -7
+    output: |
+      -7
+  - input: |
+      5 2
+      -1 -2 -3 -4 -5
+    output: |
+      -1 -2
+  - input: |
+      5 1
+      1000000000 999999999 1 2 3
+    output: |
+      1000000000

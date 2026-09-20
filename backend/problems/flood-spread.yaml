@@ -1,0 +1,85 @@
+slug: flood-spread
+title: Flood Spread
+difficulty: medium
+tags: [graphs, bfs, grids]
+source: original
+license: proprietary
+question: |
+  A burst pipe floods a warehouse floor. The floor is a grid where `.` is open space and
+  `#` is a wall. Water spreads from the burst to any open cell sharing an edge — never
+  diagonally, never through a wall.
+
+  Count how many cells end up flooded, including the starting cell.
+
+  **Input**
+  The first line contains two integers `r` and `c`.
+  The next `r` lines each contain `c` characters, either `.` or `#`.
+  The last line contains two integers `sr sc`, the 0-indexed row and column of the burst.
+
+  **Output**
+  A single integer: the number of flooded cells. If the burst cell is a wall, print 0.
+constraints: |
+  1 <= r, c <= 500
+  0 <= sr < r, 0 <= sc < c
+starter_code:
+  python: |
+    import sys
+
+    def main():
+        data = sys.stdin.read().split()
+        r, c = int(data[0]), int(data[1])
+        grid = data[2:2 + r]
+        sr, sc = int(data[2 + r]), int(data[3 + r])
+        # TODO: flood fill from (sr, sc)
+        print(0)
+
+    main()
+test_cases:
+  - public: true
+    input: |
+      3 3
+      ...
+      .#.
+      ...
+      0 0
+    output: |
+      8
+  - public: true
+    input: |
+      3 3
+      #.#
+      ###
+      #.#
+      0 1
+    output: |
+      1
+  - input: |
+      1 1
+      .
+      0 0
+    output: |
+      1
+  - input: |
+      1 1
+      #
+      0 0
+    output: |
+      0
+  - input: |
+      2 4
+      ....
+      ....
+      1 3
+    output: |
+      8
+  # Left column (4) + bottom row (3 new) + right column (3 new) = 10. The wall block
+  # forces the water the long way round.
+  - input: |
+      4 4
+      .##.
+      .##.
+      .##.
+      ....
+      0 0
+    output: |
+      10

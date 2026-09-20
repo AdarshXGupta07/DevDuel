@@ -1,0 +1,79 @@
+slug: pair-sum-target
+title: Pair Sum Target
+difficulty: easy
+tags: [arrays, hashing, two-pointers]
+source: original
+license: proprietary
+question: |
+  A payments team reconciles refunds by matching two transactions whose amounts add up
+  to a disputed total. Given the transaction amounts and the disputed total, count how
+  many distinct pairs of positions add up to exactly that total.
+
+  A pair is two different positions i and j with i < j. Two pairs are different if their
+  position sets differ, even when the amounts are the same.
+
+  **Input**
+  The first line contains an integer `n`.
+  The second line contains `n` space-separated integers, the amounts.
+  The third line contains an integer `target`.
+
+  **Output**
+  A single integer: the number of pairs.
+constraints: |
+  1 <= n <= 200000
+  -1000000 <= each amount <= 1000000
+  -2000000 <= target <= 2000000
+
+  An O(n^2) scan of every pair will not finish on the largest inputs.
+starter_code:
+  python: |
+    import sys
+
+    def main():
+        data = sys.stdin.read().split()
+        n = int(data[0])
+        amounts = [int(x) for x in data[1:1 + n]]
+        target = int(data[1 + n])
+        # TODO: count the pairs
+        print(0)
+
+    main()
+test_cases:
+  - public: true
+    input: |
+      5
+      1 2 3 4 5
+      6
+    output: |
+      2
+  - public: true
+    input: |
+      4
+      2 2 2 2
+      4
+    output: |
+      6
+  - input: |
+      1
+      5
+      5
+    output: |
+      0
+  - input: |
+      6
+      -3 1 4 -1 0 3
+      0
+    output: |
+      2
+  - input: |
+      5
+      1000000 1000000 -1000000 -1000000 0
+      0
+    output: |
+      4
+  - input: |
+      3
+      7 7 7
+      15
+    output: |
+      0

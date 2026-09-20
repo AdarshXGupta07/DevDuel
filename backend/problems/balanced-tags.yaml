@@ -1,0 +1,63 @@
+slug: balanced-tags
+title: Balanced Tags
+difficulty: easy
+tags: [stack, strings]
+source: original
+license: proprietary
+question: |
+  A tiny markup language uses three kinds of brackets — `()`, `[]` and `{}` — and nothing
+  else. A document is valid when every opening bracket is closed by the matching kind, in
+  the correct order.
+
+  **Input**
+  A single line containing the document. It may be empty.
+
+  **Output**
+  Print `VALID` if the document is balanced, otherwise `INVALID`.
+constraints: |
+  The line contains at most 200000 characters, all of which are bracket characters.
+starter_code:
+  python: |
+    import sys
+
+    def main():
+        line = sys.stdin.readline().strip()
+        # TODO: decide whether `line` is balanced
+        print("INVALID")
+
+    main()
+  javascript: |
+    const line = require('fs').readFileSync(0, 'utf8').split('\n')[0].trim();
+    // TODO: decide whether `line` is balanced
+    console.log('INVALID');
+test_cases:
+  - public: true
+    input: |
+      ([]{})
+    output: |
+      VALID
+  - public: true
+    input: |
+      ([)]
+    output: |
+      INVALID
+  - input: |
+
+    output: |
+      VALID
+  - input: |
+      (((((((((())))))))))
+    output: |
+      VALID
+  - input: |
+      ((((
+    output: |
+      INVALID
+  - input: |
+      ))))
+    output: |
+      INVALID
+  - input: |
+      {[()()]}
+    output: |
+      VALID

@@ -1,0 +1,64 @@
+slug: single-unpaired-id
+title: The Unpaired Sensor
+difficulty: easy
+tags: [bit-manipulation, arrays, xor]
+source: original
+license: proprietary
+question: |
+  Every sensor in a mesh reports twice, except one faulty unit that reports only once.
+  Given the stream of sensor ids, find the id that appears an odd number of times.
+
+  Exactly one id appears once; every other id appears exactly twice.
+
+  **Input**
+  The first line contains an integer `n`.
+  The second line contains `n` space-separated sensor ids.
+
+  **Output**
+  A single integer: the unpaired id.
+constraints: |
+  1 <= n <= 1000000, and n is odd
+  0 <= each id <= 1000000000
+
+  Solvable in O(n) time and O(1) extra space — a set or a counter works but is not the
+  intended solution.
+starter_code:
+  python: |
+    import sys
+
+    def main():
+        data = sys.stdin.read().split()
+        n = int(data[0])
+        ids = [int(x) for x in data[1:1 + n]]
+        # TODO: find the id that appears once
+        print(0)
+
+    main()
+test_cases:
+  - public: true
+    input: |
+      5
+      4 1 2 1 2
+    output: |
+      4
+  - public: true
+    input: |
+      1
+      99
+    output: |
+      99
+  - input: |
+      7
+      7 3 5 3 7 5 11
+    output: |
+      11
+  - input: |
+      3
+      0 1000000000 1000000000
+    output: |
+      0
+  - input: |
+      9
+      1 1 2 2 3 3 4 4 5
+    output: |
+      5

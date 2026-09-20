@@ -1,0 +1,84 @@
+slug: prefix-matches
+title: Autocomplete Count
+difficulty: medium
+tags: [tries, strings, hashing]
+source: original
+license: proprietary
+question: |
+  A search box suggests commands as you type. For each query prefix, report how many
+  known commands start with it.
+
+  A command counts as starting with a prefix equal to itself.
+
+  **Input**
+  The first line contains two integers `n` and `q`.
+  Each of the next `n` lines contains one command (lowercase letters).
+  Each of the next `q` lines contains one query prefix (lowercase letters).
+
+  **Output**
+  One integer per query, each on its own line.
+constraints: |
+  1 <= n, q <= 100000
+  1 <= length of each command and prefix <= 20
+  Commands may repeat, and each copy counts.
+starter_code:
+  python: |
+    import sys
+
+    def main():
+        data = sys.stdin.read().split()
+        n, q = int(data[0]), int(data[1])
+        commands = data[2:2 + n]
+        queries = data[2 + n:2 + n + q]
+        # TODO: how many commands start with each prefix
+        pass
+
+    main()
+test_cases:
+  - public: true
+    input: |
+      4 3
+      deploy
+      delete
+      debug
+      run
+      de
+      deploy
+      x
+    output: |
+      3
+      1
+      0
+  - public: true
+    input: |
+      2 2
+      ab
+      ab
+      a
+      ab
+    output: |
+      2
+      2
+  - input: |
+      1 1
+      z
+      z
+    output: |
+      1
+  - input: |
+      3 2
+      abc
+      abd
+      abe
+      ab
+      abc
+    output: |
+      3
+      1
+  - input: |
+      2 1
+      hello
+      hell
+      hell
+    output: |
+      2

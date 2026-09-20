@@ -1,0 +1,61 @@
+slug: shelf-sorting
+title: Shelf Sorting
+difficulty: easy
+tags: [arrays, two-pointers, sorting]
+source: original
+license: proprietary
+question: |
+  A warehouse shelf holds items in three condition grades: 0 (damaged), 1 (used) and
+  2 (new). Reorder the shelf so all damaged items come first, then used, then new.
+
+  **Input**
+  The first line contains an integer `n`.
+  The second line contains `n` space-separated integers, each 0, 1 or 2.
+
+  **Output**
+  A single line of `n` space-separated integers: the reordered shelf.
+constraints: |
+  1 <= n <= 200000
+  Each grade is 0, 1 or 2.
+
+  Aim for a single pass using constant extra space.
+starter_code:
+  python: |
+    import sys
+
+    def main():
+        data = sys.stdin.read().split()
+        n = int(data[0])
+        grades = [int(x) for x in data[1:1 + n]]
+        # TODO: reorder in one pass
+        print(" ".join(map(str, grades)))
+
+    main()
+test_cases:
+  - public: true
+    input: |
+      6
+      2 0 1 2 1 0
+    output: |
+      0 0 1 1 2 2
+  - public: true
+    input: |
+      3
+      1 1 1
+    output: |
+      1 1 1
+  - input: |
+      1
+      2
+    output: |
+      2
+  - input: |
+      5
+      2 2 2 0 0
+    output: |
+      0 0 2 2 2
+  - input: |
+      9
+      0 1 2 0 1 2 0 1 2
+    output: |
+      0 0 0 1 1 1 2 2 2

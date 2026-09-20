@@ -1,0 +1,72 @@
+slug: bandwidth-split
+title: Bandwidth Split
+difficulty: hard
+tags: [binary-search, greedy, search-on-answer]
+source: original
+license: proprietary
+question: |
+  A batch of files must be copied by `k` workers. The files are queued in a fixed order
+  and each worker takes a contiguous run of that queue — no reordering, no splitting a
+  file. Every worker copies its run at the same speed, so the job finishes when the
+  slowest worker does.
+
+  Assign the runs so the largest total assigned to any single worker is as small as
+  possible, and report that total.
+
+  **Input**
+  The first line contains two integers `n` and `k`.
+  The second line contains `n` space-separated integers, the file sizes in queue order.
+
+  **Output**
+  A single integer: the smallest possible value of the largest worker's total.
+constraints: |
+  1 <= k <= n <= 200000
+  1 <= each file size <= 1000000
+
+  Trying every assignment is exponential. Think about what you can *check* quickly
+  instead of what you can construct.
+starter_code:
+  python: |
+    import sys
+
+    def main():
+        data = sys.stdin.read().split()
+        n, k = int(data[0]), int(data[1])
+        sizes = [int(x) for x in data[2:2 + n]]
+        # TODO: minimise the largest worker total
+        print(0)
+
+    main()
+test_cases:
+  - public: true
+    input: |
+      5 2
+      10 20 30 40 50
+    output: |
+      90
+  - public: true
+    input: |
+      4 4
+      1 2 3 4
+    output: |
+      4
+  - input: |
+      1 1
+      7
+    output: |
+      7
+  - input: |
+      5 1
+      1 2 3 4 5
+    output: |
+      15
+  - input: |
+      6 3
+      5 5 5 5 5 5
+    output: |
+      10
+  - input: |
+      7 3
+      1 1 1 1 1 1 100
+    output: |
+      100
