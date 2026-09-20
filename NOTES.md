@@ -100,3 +100,53 @@ question for refresh tokens.
 - `README.md` and full `docs/decisions.md` (ADR-0001 through ADR-0010) still need to be
   written up properly — most decisions were made and discussed in the moment but not all
   filed to the doc yet.
+
+---
+
+## Day 11 — 2026-09-19 (production pass, Days 11–20 scope)
+
+**Built:**
+- **P0 defect fixes (§3 of docs/production-plan.md):** CORS locked to an explicit origin
+  list for both FastAPI and Socket.IO, with `*` refused outright in production; rotating
+  refresh tokens with reuse detection and hashed storage; `type` claim enforced so a
+  refresh token can no longer be used as an access token; every timestamp column moved to
+  `timestamptz` with an aware `utcnow()`; the dead duplicate `legal_transition` deleted;
+  `as_uuid()` validation at every id boundary; the loose test scripts moved out of
+  `backend/` root into `scripts/manual/` so they stop writing junk into the database.
+- **Schema pass (§4):** `duels.mode` (casual/ranked) plus language, match clock and rating
+  snapshots; `ranked_daily_usage` as an atomically-claimed counter table; `subscriptions`,
+  `payments`, `rating_history`, `match_events`, `reports`, `rooms`; problem provenance
+  (`source`, `license`) and per-problem limits; indexes behind the disconnect lookup.
+  One migration: `c1a2d3e4f501_production_schema_pass.py`.
+- **Day 10, finally:** presence tracking, disconnect → opponent notification → cancellable
+  30s grace timer → forfeit, reconnect cancels the timer and resyncs, and
+  `sweep_expired_duels()` as the server-restart backstop.
+- **Days 11–13 (judge):** pinned non-root runner images, `sandbox.py` with the full flag
+  set and a capped output reader, `judge_service.py` with verdict mapping and
+  fail-fast test execution.
+- **Day 14 (problems):** 5 original problems as YAML + reference solutions, a seeder, and
+  `verify_problems.py` which runs each reference solution through the real sandbox.
+- **Day 15 (winnable duels):** `duel:submit` → judge → submission row → atomic
+  `finish_duel` → ELO → `duel:end`. A duel can now actually be won.
+- **Days 16–17:** concurrency semaphore, submission/run rate limits, the attack suite.
+- **Days 18–20 (frontend):** React + Vite + Monaco, auth, lobby with the ranked-cap wall,
+  the duel screen with server-authoritative timers, opponent status panel, paste-disable
+  and keystroke logging in ranked, and the post-match reveal.
+
+**Confused me / worth remembering:**
+- `refresh_tokens.token` held raw tokens. They cannot be hashed retroactively, so the
+  migration deletes them — everyone gets logged out once, which is the cheap correct answer
+  now and would not be later.
+- Two refresh tokens minted for the same user in the same second were byte-identical,
+  which collides with the new UNIQUE on `token_hash`. Fixed with a `jti` + nonce.
+- Concurrent refresh calls from the browser look exactly like token theft. The client has
+  to collapse them into one in-flight promise or it revokes its own session.
+
+**Would do differently:** the schema pass should have happened around Day 8. Adding
+`duels.mode` after the matchmaking and ready-up logic existed meant touching all of it.
+
+**Open / not done:**
+- The migration has **not been run** — the database was not reachable from this machine.
+- The runner images have **not been built** — Docker Desktop started but its CLI stopped
+  responding, so the attack suite is unverified.
+- Both are the first two steps of the next session. See the end of docs/production-plan.md.

@@ -1,0 +1,67 @@
+# Local development stack: API + Postgres + Redis.
+#
+#   docker compose up --build
+#
+# Redis is here ahead of the code that uses it (Day 25) so the migration off in-process
+# state is a config change, not an infrastructure project.
+
+services:
+  db:
+    image: postgres:17.2-alpine
+    environment:
+      POSTGRES_USER: devduel
+      POSTGRES_PASSWORD: devduel_local_only
+      POSTGRES_DB: devduel
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U devduel"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7.4-alpine
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build:
+      context: ./backend
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      SUPABASE_URL: postgresql+asyncpg://devduel:devduel_local_only@db:5432/devduel
+      APP_ENV: development
+      JWT_SECRET: ${JWT_SECRET:-dev_only_not_a_real_secret_change_me}
+      CORS_ORIGINS: http://localhost:5173
+      REDIS_URL: redis://redis:6379/0
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      RAZORPAY_KEY_ID: ${RAZORPAY_KEY_ID:-}
+      RAZORPAY_KEY_SECRET: ${RAZORPAY_KEY_SECRET:-}
+      RAZORPAY_WEBHOOK_SECRET: ${RAZORPAY_WEBHOOK_SECRET:-}
+      RAZORPAY_PLAN_ID: ${RAZORPAY_PLAN_ID:-}
+    ports:
+      - "8000:8000"
+    volumes:
+      # The judge starts sibling containers on the host daemon rather than nesting
+      # Docker inside Docker. Read it twice: this socket is root on the host. It is
+      # acceptable on a dev laptop and on a single-purpose judge box; it is the reason
+      # the API and the judge belong on separate machines once there is money involved.
+      - /var/run/docker.sock:/var/run/docker.sock
+    group_add:
+      - "999"   # the `docker` group on most Debian/Ubuntu hosts; check with `getent group docker`
+
+volumes:
+  pgdata:
