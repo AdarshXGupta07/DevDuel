@@ -1,41 +1,19 @@
+"""The Socket.IO server object, and nothing else.
+
+Deliberately free of imports from `app.services` so that services may import `sio` for
+emitting without creating an import cycle. Connection handlers live in `lifecycle.py`.
+"""
+
 import socketio
-from app.core.security import decode_token
-from jose import JWTError
-from socketio.exceptions import ConnectionRefusedError
-from app.services.matchmaking_service import remove_from_queue
-sio=socketio.AsyncServer(async_mode='asgi', cors_allowed_origins='*')
 
+from app.config import settings
 
-@sio.event
-async def connect(sid, environ,auth):
-    if auth is None or 'token' not in auth:
-        raise ConnectionRefusedError("Authentication token is required.")
-    token=auth.get('token')
-    try:
-        payload=decode_token(token)
-    except JWTError:
-        raise ConnectionRefusedError("Invalid token.")
-    user_id=payload.get("sub")
-    if user_id is None:
-        raise ConnectionRefusedError("Invalid token.")
-    await sio.save_session(sid, {'user_id': user_id})
-    
-@sio.event
-async def whoami(sid):
-    # 1. Get back the session dict you saved during connect()
-    #    Look up: sio.get_session(sid) — it's async, so you'll need `await`
-    session = await sio.get_session(sid)
-
-    # 2. Send something back to just this one connection, confirming what it knows
-    #    Look up: sio.emit(event_name, data, to=sid)
-    #    - event_name: pick any string, e.g. "whoami_response"
-    #    - data: a dict containing the user_id from the session
-    #    - to=sid: makes sure only THIS connection receives it, not everyone connected
-    await sio.emit('whoami_response', {'user_id': session['user_id']}, to=sid)
-    
-@sio.event
-async def disconnect(sid):
-    session = await sio.get_session(sid)
-    if session:
-        remove_from_queue(session["user_id"])
-    print(f"Client {sid} disconnected.")
+# ADR-0022: '*' was a development convenience that would have shipped. Credentialed
+# sockets with a wildcard origin let any page on the internet open an authenticated
+# connection on a logged-in user's behalf.
+sio = socketio.AsyncServer(
+    async_mode="asgi",
+    cors_allowed_origins=settings.cors_origin_list,
+    ping_interval=20,
+    ping_timeout=25,
+)
