@@ -1,12 +1,19 @@
 fastapi
 uvicorn[standard]
 pydantic-settings
+pydantic[email]
 sqlalchemy[asyncio]
 asyncpg
 alembic
 bcrypt
 python-jose[cryptography]
 python-socketio
+pyyaml
+httpx            # also the Razorpay client — the official SDK is sync and would block
+tzdata           # IANA timezones; Windows ships none, and the daily reset needs IST
+anthropic        # official SDK for the AI review and AI opponent
+
+# dev / test
 pytest
 pytest-asyncio
-httpx
+pytest-cov
